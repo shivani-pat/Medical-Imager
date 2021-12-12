@@ -11,6 +11,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include "arduinowindow.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -80,11 +82,13 @@ void MainWindow::on_pushButton_released()
         MainWindow::on_pushButton_2_released();
 
     }
-    LPCTSTR appToRun = (LPCTSTR)(labelDir.utf16());
-    printf(qPrintable(labelDir));
-    if(!startup(appToRun, dirToRun)){
-        QMessageBox::warning(this, "Incorrect Executable", ".exe not found. Please select ArenaView.exe in the file explorer.", QMessageBox::Ok, QMessageBox::NoButton);
-        MainWindow::on_pushButton_2_released();
+    else{
+        LPCTSTR appToRun = (LPCTSTR)(labelDir.utf16());
+        printf(qPrintable(labelDir));
+        if(!startup(appToRun, dirToRun)){
+            QMessageBox::warning(this, "Incorrect Executable", ".exe not found. Please select ArenaView.exe in the file explorer.", QMessageBox::Ok, QMessageBox::NoButton);
+            MainWindow::on_pushButton_2_released();
+        }
     }
 
 }
@@ -97,5 +101,14 @@ void MainWindow::on_pushButton_released()
 void MainWindow::on_pushButton_3_released()
 {
     MainWindow::close();
+}
+
+
+void MainWindow::on_pushButton_4_released()
+{
+    ArduinoWindow arduinoWindow;
+    arduinoWindow.setModal(true);
+    arduinoWindow.exec();
+    //MainWindow::hide();
 }
 
